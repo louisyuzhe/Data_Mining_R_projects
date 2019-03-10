@@ -1,0 +1,226 @@
+---
+title: "CS 422 Section 01"
+output: html_notebook
+author: Yuzhe Lim
+---
+
+## Part 2.1
+### Part 2.1-A
+```{r}
+library(dplyr)
+setwd("C:/Users/Yu Zhe/Desktop/Illinois Tech/Spring 2019/CS 422/HW1")
+college.df <- read.csv("College.csv")
+#Is the seperating method important? "sep"
+college.df[1:6,]
+```
+
+### Part 2.1-B
+```{r}
+#Must use table?
+no.private <- sum(college.df$Private == "Yes")
+no.public <- sum(college.df$Private == "No")
+str <- paste0("Number of private colleges is ", no.private, ", and number of public colleges is ", 
+              no.public)
+str
+```
+
+### Part 2.1-C
+```{r}
+public.df <- filter(college.df, college.df$Private == "No")
+private.df <- filter(college.df, college.df$Private == "Yes")
+colors <- c("blue", "yellow", "orange", "pink", "green", "purple")
+hist(public.df$PhD, main=" PhD holders in public colleges", xlab=" Percent of faculty with Ph.D.'s", col= colors, freq = FALSE, plot = TRUE)
+lines(density(public.df$PhD), lwd = 4, col = "red")
+#Public colleges Are top-heavy with respect to PhD faculty
+```
+
+```{r}
+hist(private.df$PhD, main=" PhD holders in private colleges", xlab=" Percent of faculty with Ph.D.'s", col=colors, freq=FALSE, plot = TRUE)
+lines(density(private.df$PhD), lwd = 4, col = "red")
+#Private colleges Are top-heavy with respect to PhD faculty
+```
+
+### Part 2.1-D
+```{r}
+college2.df <- arrange(college.df, college.df$Grad.Rate)
+
+#Displaytop 5 colleges that have the minimum graduation rates
+top5min <- select(college2.df[1:5,], Name, Grad.Rate)
+top5min
+
+#Display top 5 colleges that have the maximum graduation rate
+
+#Rearrange in descending order and take top 5
+DesOrderedCollege <- arrange(college2.df, desc(Grad.Rate))
+top5max <- select(DesOrderedCollege[1:5,], Name, Grad.Rate)
+top5max
+
+```
+
+## Part 2.1-E
+### Part 2.1-E-I
+```{r}
+summary(college.df)
+```
+
+
+### Part 2.1-E-II
+```{r}
+pairs(college.df[,1:10])
+```
+
+### Part 2.1-E-III
+```{r}
+boxplot(perc.alumni~Private, data = college.df, main="Donation of alumni from public vs private schools",
+xlab="Alumni from Private school",
+ylab=": Percent of alumni who donate",
+col="yellow",
+border="red")
+#Alumni from private schools donated more than those of public schools
+```
+
+### Part 2.1-E-IV
+```{r}
+boxplot(PhD~Private, data = college.df, main="Number of PhD employs by public vs private schools",
+xlab="Public/private indicator",
+ylab="Percent of faculty with Ph.D.'s",
+col="green",
+border="brown")
+#Private colleges employs more PhD than public colleges do
+```
+
+### Part 2.1-E-V
+```{r}
+Elite <- rep("No", nrow(college.df))
+Elite[college.df$Top10perc > 50] <- "Yes"
+Elite <- as.factor(Elite)
+college.df <- data.frame(college.df, Elite)
+summary(college.df)
+```
+
+### Part 2.1-E-VI
+```{r}
+par(mfrow=c(2,2)) 
+
+hist(public.df$Accept, main=" Acceptance rate into public colleges", xlab="Number of applicants accepted", col = colors, plot = TRUE)
+hist(private.df$Accept, main=" Acceptance rate into private colleges", xlab="Number of applicants accepted", col = colors, plot = TRUE)
+hist(public.df$Enroll, main=" Student Enrollment rate in public colleges", xlab="Number of students enrolled", col = colors, plot = TRUE)
+hist(private.df$Enroll, main=" Student Enrollment rate in private colleges", xlab="Number of students enrolled", col = colors, plot = TRUE)
+```
+
+### Part 2.1-E-VI
+```{r}
+par(mfrow=c(3,2)) 
+
+hist(public.df$F.Undergrad, main=" Full-Time Status Undergrads in public colleges", xlab="Number of students", col = colors, plot = TRUE)
+hist(private.df$F.Undergrad, main=" Full-Time Status Undergrads in private colleges", xlab="Number of students", col = colors, plot = TRUE)
+hist(public.df$P.Undergrad, main=" Part-Time Status Undergrads in public colleges", xlab="Number of students", col = colors, plot = TRUE)
+hist(private.df$P.Undergrad, main=" Part-Time Status Undergrads in private colleges", xlab="Number of students", col = colors, plot = TRUE)
+hist(public.df$Grad.Rate, main=" Graduation Rate in public colleges", xlab="Graduation Rate", col = colors, plot = TRUE)
+hist(private.df$Grad.Rate, main=" Graduation Rate in private colleges", xlab="Graduation Rate", col = colors, plot = TRUE)
+#Both public and private colleges are Bottom-heavy with respect to full-time and part-time undergrad students enrolled. Besides, there are more full-time undergraduate students enrolled in public colleges than private colleges probably due to the gap in tuition fees. There are about the same amount of students enrolled in both public and private students with a part-time status. The graduation rate for both public and private collegesn are in bell-shaped which represented a normal distribution in students' graduation but Private colleges has a higher graduation rate than public colleges due to multiple factors.
+
+``` 
+
+## Part 2.2
+### Part 2.2-A
+```{r}
+library(ISLR)
+data(Auto)
+model <- lm(mpg ~ horsepower, data = Auto)
+summary(model)
+```
+
+### Part 2.2-A-i
+```{r}
+#Yes, there is a strong relationship between the predictor and the response as shown by the p-value <0.05
+```
+
+
+### Part 2.2-A-ii
+```{r}
+# Mpg decrease by approximately -0.158 per every unit increase of horsepower. Hence, the relationship between the predictor and the response is not too strong as mpg doesn't change as much as horsepower.
+
+```
+
+### Part 2.2-A-iii
+```{r}
+#The  relationship between the predictor and the response is negative due to the regression coefficient of horsepower being negative.
+```
+
+### Part 2.2-A-iV
+```{r}
+# The predicted mpg associated with a horsepower of 98 and associated 95% confidence intervals
+predict(model, data.frame(horsepower = 98), interval = "confidence")
+
+
+
+# The predicted mpg associated with a horsepower of 98 and associated 95% prediction intervals
+predict(model, data.frame(horsepower = 98), interval = "prediction")
+confint(model,level = 0.95)
+```
+
+### Part 2.2-B
+```{r}
+plot(Auto$horsepower, Auto$mpg, main = "Mpg vs horsepower", xlab = "horsepower", ylab = "mpg", col = "blue")
+abline(model, lwd=2, col = "red")
+```
+
+### Part 2.2-C
+```{r}
+par(mfrow=c(2,2)) 
+plot(model)
+
+#The curve indicate the existence of non-linearity in the data of plot of residuals versus fitted values. Besides, the minority of the data points that scatter far away from the majority datapoint indicate the existence of outliers that is out of the boudnary of -2 to 2 in the dataset of plot of standardized residuals versus leverage.
+
+```
+
+## Part 2.3
+### Part 2.3-A
+```{r}
+pairs(Auto)
+```
+
+### Part 2.3-B
+```{r}
+names(Auto)
+#Names is on row/col 9
+
+cor(Auto[1:8])
+```
+
+### Part 2.3-C
+```{r}
+model2 <- lm(mpg ~. -name, data = Auto)
+summary(model2)
+
+```
+
+### Part 2.3-C-i
+```{r}
+#There is a relationship between the predictors and the response as shown by the p-value corresponding to the F-statistic with a value of 2.0372^{-139).
+```
+
+### Part 2.3-C-ii
+```{r}
+# Cylinders, Horsepower and Acceleration are not statistically significant predictors as they have a higher p-values associated with t-statistic, otherwise, the rest of the predictors have a statistically significant relationship to the response.
+```
+
+### Part 2.3-C-iii
+```{r}
+# The coefficient for the "year" variable suggest that an average effect of 1 unit increase in year woudl causes an amount of 0.750773 increase in mpg while all other predictors remain constant.
+```
+
+### Part 2.3-C-iii
+```{r}
+# The coefficient for the "year" variable suggest that an average effect of 1 unit increase in year woudl causes an amount of 0.750773 increase in mpg while all other predictors remain constant.
+``` 
+
+### Part 2.3-D
+```{r}
+par(mfrow = c(2, 2))
+plot(model2)
+
+# Yes, the slight curve indicate the existence of non-linearity in the data of plot of residuals versus fitted values. Yes, the minority of the data points that scatter far away from the majority datapoint indicate the existence of outliers that is out of the boudnary of -2 to 2 in the dataset of plot of standardized residuals versus leverage, there is one high leverage point at point 14 in the said plot.
+
+```
