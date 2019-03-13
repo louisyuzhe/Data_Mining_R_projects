@@ -1,0 +1,248 @@
+---
+title: "CS 422 Section 01"
+output: html_notebook
+author: Yuzhe Lim
+---
+
+## Part 2.1 Decision tree classification
+```{r}
+#Libaries and path setup
+library(rpart)
+library(rpart.plot)
+library(caret)
+setwd("C:/Users/Yu Zhe/OneDrive/IIT/Illinois Tech/Spring 2019/CS 422/HW2")
+
+```
+
+### Part 2.1-A
+```{r}
+set.seed(1122)
+
+#Reading dataset
+train <- read.csv("adult-train.csv")
+test <- read.csv("adult-test.csv")
+
+dim(train)[1]
+sum(train.df$occupation == "?")
+
+#Unimplemented methods
+#indx1 <- which(test.df$occupation == "?")
+#train <- train[-indx, ]
+
+#cleaning train dataset
+for (i in colnames(train)) {
+
+    #Only data without "?" as attribute(s) will be load into new
+    train <- train[which(train[i] != "?"),]
+}
+paste(dim(train)[1] ," observations in the training set")
+
+
+#cleaning test dataset
+for (i in colnames(test)) {
+  
+    #Only data without "?" as attribute(s) will be load into new
+    test <- test[which(test[i] != "?"),]
+}
+paste(dim(test)[1] ," observations in the testing set")
+
+```
+
+### Part 2.1-B
+```{r}
+dtree <- rpart(income ~ ., method="class", data=train)
+
+#### Visualize the decision tree
+rpart.plot(dtree, extra=104, fallen.leaves=T, type=4, main="Decision tree model of train data (Full Tree)")
+
+summary(dtree)
+```
+
+### Part 2.1-B-i
+####According to the summary of dtree under the section (Variable importance), the top three important predictors in the model is 'relationship', 'marital_status', 'capital_gain', respectively. If we obeserve the dtree model plot, the top three predictor that build a better decision tree are 'relationship', 'capital_gain', 'education'.
+
+### Part 2.1-B-ii
+####The first split is done on 'relationship'. The predicted class of the first node is representing the income of "<=50k". At first node, the distribution is 75% of the population falls into the "<=50K", while the other 25% falls into the ">50K" classes.
+
+### Part 2.1-C
+```{r}
+#Use the trained model from (b) to predict the test dataset
+pred <- predict(dtree, test, type="class")
+```
+
+### Part 2.1-C-i
+```{r}
+conMatrix <- confusionMatrix(pred, test$income)
+conMatrix
+balAcc = (conMatrix$byClass["Sensitivity"]+conMatrix$byClass["Specificity"])/2
+cat(sprintf("The balanced accuracy of our model is according to calculation: %.3f whereas\nthe balanced accuracy of our model is according to Confusion Matrix: %.3f", balAcc, conMatrix$byClass["Balanced Accuracy"]))
+``` 
+
+### Part 2.1-C-ii
+```{r}
+Balanced_error_rate <- 1.0-balAcc
+cat(sprintf("The balanced error rate of the model according to calculation: %.3f", Balanced_error_rate))
+```
+
+### Part 2.1-C-iii
+```{r}
+sensitivity = conMatrix$byClass["Sensitivity"]
+cat(sprintf("Sensitivity: %.3f", sensitivity))
+
+specificity = conMatrix$byClass["Specificity"]
+cat(sprintf("Specificity: %.3f", specificity))
+```
+
+### Part 2.1-C-iv
+```{r}
+# ROC curve
+pred.rocr <- predict(dtree, newdata=test, type="prob")[,2]
+f.pred <- prediction(pred.rocr, test$income)
+f.perf <- performance(f.pred, "tpr", "fpr")
+
+#AUC
+auc <- performance(f.pred, measure = "auc")
+cat(paste("The area under curve (AUC) for this model is", round(auc@y.values[[1]], 3)))
+
+#ROC Plot
+plot(f.perf, colorize=T, lwd=3)
+abline(0,1)
+```
+
+### Part 2.1-D
+```{r}
+#Complexity Table of trained model
+printcp(dtree)
+```
+#### The tree would not benefit from a pruning. The tree would never benefit from a pruning no matter what complexity level of pruning would make a difference. The reason being the xerror column is monotonically decreasing. 
+### Part 2.1-E-i
+```{r}
+cat("In the training dataset, number of observations of class '<=50K': ", sum(train$income == "<=50K"))
+cat("In the training dataset, number of observations of class '>50K': ", sum(train$income == ">50K"))
+```
+
+### Part 2.1-E-ii
+```{r}
+# Create a new training dataset that has equal representation of both classes
+newtrain1 <- which(train$income == ">50K")
+#sample as many observations as there are in the newTrain1 aka ">50K""
+newtrain2 <- sample(which(train$income == "<=50K"), length(newtrain1))
+
+newtrain <- train[c(newtrain1,newtrain2),]
+rm(newtrain1,newtrain2)
+newtrain
+```
+
+### Part 2.1-E-iii
+```{r}
+# Train a new model on the new training dataset, and then fit this model to the testing dataset
+dtree2 <- rpart(income ~ ., method="class", data=newtrain)
+pred2 <- predict(dtree2, test, type="class")
+
+conMatrix2 <- confusionMatrix(pred2, test$income)
+conMatrix2
+```
+
+### Part 2.1-E-iii-i
+```{r}
+balAcc2 = (conMatrix2$byClass["Sensitivity"]+conMatrix2$byClass["Specificity"])/2
+cat(sprintf("The balanced accuracy of our model is according to calculation: %.3f whereas\nthe balanced accuracy of our model is according to Confusion Matrix: %.3f", balAcc2, conMatrix2$byClass["Balanced Accuracy"]))
+
+```
+
+
+### Part 2.1-E-iii-ii
+```{r}
+Balanced_error_rate2 <- 1.0-balAcc2
+cat(sprintf("The balanced error rate of the model according to calculation: %.3f", Balanced_error_rate2))
+```
+
+### Part 2.1-E-iii-iii
+```{r}
+sensitivity2 = conMatrix2$byClass["Sensitivity"]
+cat(sprintf("Sensitivity: %.3f", sensitivity2))
+
+specificity2 = conMatrix2$byClass["Specificity"]
+cat(sprintf("Specificity: %.3f", specificity2))
+```
+
+### Part 2.1-E-iii-iv
+```{r}
+# ROC curve
+pred2.rocr <- predict(dtree2, newdata=test, type="prob")[,2]
+f2.pred <- prediction(pred2.rocr, test$income)
+f2.perf <- performance(f2.pred, "tpr", "fpr")
+
+#AUC
+auc2 <- performance(f2.pred, measure = "auc")
+cat(paste("The area under curve (AUC) for this model is", round(auc2@y.values[[1]], 3)))
+
+#ROC Plot
+plot(f2.perf, colorize=T, lwd=3)
+abline(0,1)
+```
+
+### Part 2.1-F
+####Thee balanced accuracy in the model used in (e) is much higher than the one is (c) whereas the sensitivity in (e) is lower than of (c). Besides, the specificity of model in(e) is much higher than of (c) due to the model doesn't overfit towards the "<=50K" class anymore. Furthermore, the positive predictive value in (e) i also higher than of(c)  which means higher level of prediction model. Lastly, the AUC of model in (e) is slightly higher than of (c) and the shape of the ROC curve is closer to the ideal model in (e).
+
+## Part 2.2 Association Analysis
+  
+### Part 2.2-A
+####Converted csv is attached
+
+
+```{r}
+#Reading of csv files
+library(arules)
+library(arulesViz)
+trans1 <- read.transactions("tr-1k-canonical.csv", sep=",")
+trans2 <- read.transactions("tr-5k-canonical.csv", sep=",")
+trans3 <- read.transactions("tr-20k-canonical.csv", sep=",")
+trans4 <- read.transactions("tr-75k-canonical.csv", sep=",")
+```
+### Part 2.2-B
+```{R}
+#Generating rules, minup of 0.02 seems to fit best
+rules1 <- apriori(trans1, parameter = list(sup = 0.02, conf=0.5,target="rules"))
+rules2 <- apriori(trans2, parameter = list(sup = 0.02, conf=0.5,target="rules"))
+rules3 <- apriori(trans3, parameter = list(sup = 0.02, conf=0.5,target="rules"))
+rules4 <- apriori(trans4, parameter = list(sup = 0.02, conf=0.5,target="rules"))
+
+
+#11 redundant rules for tr-1k-canonical
+inspect(sort(rules1, by = "lift"))
+#All the rules in tr-1k-canonical except last 3 have lifts of more than 5.5. This means that the correlation between all the items in their respective rules are very high.
+
+inspect(sort(rules2, by = "lift"))
+#All the rules in tr-5k-canonical except last 3 have lifts of more than 5.5. This means that the correlation between all the items in their respective rules are very high.
+
+inspect(sort(rules3, by = "lift"))
+#All the rules in tr-20k-canonical except last one have lifts of more than 5.5. This means that the correlation between all the items in their respective rules are very high.
+
+inspect(sort(rules4, by = "lift"))
+#All the rules in tr-75k-canonical have lifts of more than 5.5. This means that the correlation between all the items in their respective rules are very 
+
+is.significant(rules1, trans1, method = "fisher", alpha = 0.01, adjust = "bonferroni") 
+is.significant(rules2, trans2, method = "fisher", alpha = 0.01, adjust = "bonferroni") 
+is.significant(rules3, trans3, method = "fisher", alpha = 0.01, adjust = "bonferroni") 
+is.significant(rules4, trans4, method = "fisher", alpha = 0.01, adjust = "bonferroni") 
+#All the rules mined are significant (the LHS and the RHS depend on each other). Hence, they are rules that associate the presence of one set of items with that of another set of items. 
+
+```
+
+
+### Part 2.2-C
+####THe rules obtained from "tr-1k-canonical.csv", "tr-5k-canonical.csv", "tr-20k-canonical.csv" to "tr-75k-canonical.csv"appears to be increasing from 82 to 115 then stop around 114 to 116. The number of rules increase as the number of transactions raises till a point that it becomes constant, but the minimum support count increase gradually as number of transaction increase as it goes from 20, 100, 400 to 1500. All the results above are verified to be non duplicated rules, mostly having a lift of 5.5 and above, and are rules that associate the presence of one set of items with that of another set of items. 
+
+### Part 2.2-D-i
+```{r}
+sprintf("The most frequently purchased item and its relative frequency: ")
+sort(table(unlist(LIST(trans4))), TRUE)[1:1]
+
+```
+
+### Part 2.2-D-ii
+```{r}
+sprintf("The least frequently purchased item and its frequency: ")
+sort(table(unlist(LIST(trans4))))[1:1]
+```
