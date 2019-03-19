@@ -1,1 +1,1 @@
-# Data_Mining_projects
+Implementation and application of essential data mining concepts and algorithms (Linear regression, Decision tree models, Association rules: Frequent itemsets and market-basket analysis, Supervised learning: Classification)
