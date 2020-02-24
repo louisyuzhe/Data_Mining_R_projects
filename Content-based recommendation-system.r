@@ -1,0 +1,269 @@
+---
+title: "CS 422 Section 01"
+output: html_notebook
+author: Yuzhe Lim
+---
+```{r}
+#Libaries and path setup
+library(textreuse)
+library(lsa)
+library(textreuse)
+
+
+setwd("D:/Users/Yuzhe/OneDrive/IIT/Illinois Tech/Spring 2019/CS 422/HW4")
+files <- list.files("./corpus", full.names=T)
+minhash <- minhash_generator(n=240, seed=100)
+corpus <- TextReuseCorpus(files, tokenizer = tokenize_ngrams, n = 5, minhash_func = minhash, keep_tokens = TRUE)
+
+```
+
+## Part 2.1: Topic: Locality sensitive hashing
+### Part 2.1-A
+```{r}
+tok <- tokens(corpus)
+tok
+```
+17614 
+
+### Part 2.1-B
+```{r}
+uniqueShingles <- unique(unlist(tokens(corpus), recursive=F))
+#uniqueShingles <- unique(unlist(tokens(corpus), recursive=T))
+cat(sprintf("Dimension of the characteristic matrix has %d rows (shingles) and %d columns (documents).", length(uniqueShingles), length(files)))
+```
+
+### Part 2.1-C
+```{r}
+doc <- corpus[["orig_taske"]]
+head(tokens(doc),n=5)
+```
+
+### Part 2.1-D
+```{r}
+ans1 <- (17614-240)/17614*100
+ans1
+```
+98.64% percentage reduction in the size of the problem
+
+### Part 2.1-E
+```{r}
+lsh_threshold(h=240, b=80)
+sprintf("Number of bands would we need to detect a minimum Jaccard similarity of 0.23 is 80")
+```
+
+### Part 2.1-F
+```{r}
+pro1 <-lsh_probability(h=240,  b=80, s=0.23) 
+sprintf("THe probability of catching similar documents at a minimum Jaccard similarity of 0.23 is %f which is 62.44 percent ", pro1)
+```
+
+### Part 2.1-G
+```{r}
+res <- pairwise_candidates(pairwise_compare(corpus, jaccard_similarity))
+```
+### Part 2.1-G-i
+4950 comparisons were made when we used the characteristic matrix
+
+### Part 2.1-G-ii
+```{r}
+length(which(res[,3]>=0.23))
+```
+
+### Part 2.1-G-iii
+```{r}
+ls1 <- res[which(res[,3]>=0.23),]
+ls1[order(-ls1$score),] 
+```
+
+### Part 2.1-H
+```{r}
+buckets <- lsh(corpus, bands=80)
+candidates <- lsh_candidates(buckets)
+res2 <- lsh_compare(candidates, corpus, jaccard_similarity)
+```
+
+### Part 2.1-H-i
+While running LSH on the corpus, 26 comparisons were made
+
+### Part 2.1-H-ii
+```{r}
+ans2 <- (4950-26)/4950*100
+ans2
+```
+Percentage decrease in the computation needed to find the candidate pairs is 99.47%
+
+### Part 2.1-H-iii
+```{r}
+res2[order(-res2$score),] 
+```
+26 rows are there in the tibble
+
+### Part 2.1-H-iv
+```{r}
+length(which(res[,3]>=0.23))
+
+```
+
+### Part 2.1-H-v
+```{r}
+ls2 <- res2[which(res2[,3]>=0.23),]
+ls2[order(-ls2$score),]
+```
+
+### Part 2.1-I
+Only 0.5253% of the original comparisons were done in LSH, saving 99.47% of the work while LSh only missed out the pair 
+## 3181 g0pE_taska & g4pC_taska with similarity of 0.2847966 and 
+## 3231 g3pC_taska & g4pC_taska with similarity of 0.2419825
+
+
+## Part 2.2: Content-based recommendation system
+```{r}
+#Select a user to profile 
+userID <- 20408059%%671
+userID
+
+user <- read.csv("ratings.csv")
+user <- user[which(user$userId == userID),]
+movies <- read.csv("movies.csv", row.names = "movieId", stringsAsFactors=F)
+genres <- c("Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary", "Drama", "Fantasy",
+"Film-Noir", "Horror", "IMAX", "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller", "War", "Western", "(no genres listed)")
+
+#Building a user profile
+watchlist <- data.frame(user$movieId, replicate(20,replicate(dim(user)[1],0)), row.names = 1)
+colnames(watchlist) <- genres
+for (mid in user$movieId) {
+  for (g in strsplit(movies[as.character(mid),]$genres, split="\\|")) {
+    watchlist[as.character(mid),g] <- 1
+  }
+}
+
+#The movies that the user has watched (included genres)
+watchlist
+userProfile <- colSums(watchlist)/dim(user)[1]
+
+#User profile
+userProfile
+
+#Building a movie profile 
+movieIDs <- sample(rownames(movies),10)  #Random 10 movies
+movieProfiles <- data.frame(movieIDs, replicate(20,replicate(length(movieIDs),0)), row.names = 1)
+colnames(movieProfiles) <- genres
+for (i in movieIDs) {
+  for (j in strsplit(movies[i,]$genres, split="\\|")) {
+    movieProfiles[i,j] <- 1
+  }
+}
+
+#Movies' profiles
+movieProfiles
+
+#Cosine similarity metric
+cosSim <- data.frame(movieIDs, replicate(length(movieIDs),0), row.names = 1)
+
+#Compute the similarity between the user and each of the mov  ies
+for (i in movieIDs) {
+  cosSim[i,] <- cosine(userProfile,as.double(movieProfiles[i,]))
+}
+cosSim
+
+#Output top 5 movies
+topFive <- rownames(cosSim)[order(cosSim, decreasing=T)][1:5]
+
+
+str1 <- sprintf("User ID %d chose the following 10 movies: %s", userID, base::toString(movieIDs))
+str1 <- c(str1, sprintf("\nOf these, the following 5 movies are recommended: \n"))
+#out <- sprintf("For user ID %d, the following movies are recommended:\n",userID)
+str2 <- c(str1, sprintf("MovieId \t MovieName \t\t\t Similarity \n"))
+  
+for (tp in topFive) {
+  str2 <- c(str2, sprintf("%s \t\t %s \t\t %.3f\n", tp, movies[tp,]$title, cosSim[tp,]))
+}
+#print(str3)
+cat(str2)
+``` 
+
+## Part 2.3: Collaborative Filtering
+### Part 2.3-A
+```{r}
+movies2 <- c("10","34","47","110","150","153","161","165","185","208","231","292","296","300","318","339","344","349","356","380","434","454","457","480","588","590","592","593","595")
+TopUsers <- c("513","317","415","375","64","556","82","225","657","266","568","50")
+testObv<- c("150","296","380","590")
+
+fiveUsers <- c("191", sample(TopUsers,5))
+fiveUsers
+
+```
+
+```{r}
+ratings <- read.csv("ratings.csv")
+ratings <- ratings[which(ratings$userId %in% fiveUsers & ratings$movieId %in% movies2),]
+
+# create a utility matrix
+U <- data.frame(fiveUsers, replicate(length(movies2),replicate(length(fiveUsers),NA)), row.names = 1)
+colnames(U) <- movies2
+for (i in rownames(ratings)) {
+  U[as.character(ratings[i,]$userId),as.character(ratings[i,]$movieId)] <- ratings[i,]$rating
+}
+U
+
+
+sprintf("Neighbourhood of 3 users who exhibit the highest Jaccard similaritie are 513, 317, 415")
+
+sumSimilarities <- 0.4358974 + 0.4033613 + 0.3255814  
+rmse <- 0
+
+str1 <- sprintf("User ID 191, 5 random user IDs: %s, %s, %s, %s, %s. \n", fiveUsers[2], fiveUsers[3], fiveUsers[4], fiveUsers[5], fiveUsers[6])
+str2 <- c(str1,sprintf("Using user-user similarity, User ID 191 will rate the movies as follows:\n"))
+
+for (t in testObv) {
+  numerator <- 0.4358974*U["513",t] + 0.4033613*U["317",t] + 0.3255814*U["415",t] 
+  rxi <- numerator/sumSimilarities
+  rmse <- rmse + (rxi-U["191",t])**2
+  str2 <- c(str2,sprintf("%s: %1.1f\n", t, rxi))
+}
+
+rmse <- sqrt(rmse/length(testObv))
+str3 <- c(str2,sprintf("RMSE: %1.1f", rmse))
+cat(str3)
+```
+
+### Part 2.3-B
+```{r}
+#U["191",testObv] <- NA
+U2 <- t(U) #29x6 is the transpose of 6x29
+U2[testObv,"191"] <- NA
+```
+
+```{r}
+means <- apply(U2,1,function(x) mean(x,na.rm=T))
+for (r in rownames(U2)) {
+  U2[r,] <- U2[r,] - means[r]
+  U2[r,] <- replace(U2[r,],which(is.na(U2[r,])),0)
+}
+
+rmse <- 0
+str4 <- sprintf("User ID 191, 5 random user IDs: %s, %s, %s, %s, %s. \n", fiveUsers[2], fiveUsers[3], fiveUsers[4], fiveUsers[5], fiveUsers[6])
+str4 <- c(str4,sprintf("Using item-item similarity, User ID 191 will rate the movies as follows:\n"))
+  
+for (t2 in testObv) {
+  pearsons <- c()
+  for (r in rownames(U2)) {
+    pearsons <- c(pearsons, cosine(U2[t2,],U2[r,]))
+  }
+  similar <- which(pearsons>=0.2)
+  rxi <- 0
+  for (s in similar) {
+    if (t2!=rownames(U2)[s]) {
+      rxi <- rxi + pearsons[s]*U2[s,"191"]
+    }
+  }
+  rxi <- rxi/(sum(pearsons[similar])-1)
+  rmse <- rmse + (rxi-U2[t2, "191"])**2
+  str4 <- c(str4,sprintf("%s: %1.1f\n", t2, rxi))
+}
+
+rmse <- sqrt(rmse/length(testObv))
+
+str5 <- c(str4,sprintf("RMSE: %1.1f", rmse))
+cat(str5)
+```
