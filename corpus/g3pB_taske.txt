@@ -1,0 +1,18 @@
+Dynamic Programming is a method of solving problems that exhibit the proper
+ties of overlapping subproblems and optimal substructure.  The term was ori
+ginally used in the 1940s by Richard Bellman.
+
+The word "programming" in "dynamic programming" has no particular connectio
+n to computer programming at all, and instead comes from the term "mathemat
+ical programming", a synonym for optimization.  The "program" is the optima
+l plan for action that is produced.
+
+For instance, a finalized schedule of events at an exhibition is sometimes 
+called a program. Programming, in this sense, means finding an acceptable p
+lan of action. 
+
+To say that a problem has overlapping subproblems is to say that the same s
+ubproblems are used to solve many different larger problems.  Optimal subst
+ructure means that optimal solutions of subproblems can be used to find the
+ optimal solutions of the overall problem.
+

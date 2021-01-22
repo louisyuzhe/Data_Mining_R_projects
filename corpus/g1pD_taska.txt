@@ -1,0 +1,20 @@
+Inheritance is a method of forming new classes using predefined classes. Th
+e new classes are called derived classes and they inherit the behaviours an
+d attributes of the base classes. It was intended to allow existing code to
+ be used again with minimal or no alteration. It also offers support for re
+presentation by categorization in computer languages; this is a powerful me
+chanism of information processing, vital to human learning by means of gene
+ralization and cognitive economy. Inheritance is occasionally referred to a
+s generalization due to the fact that is-a relationships represent a hierar
+chy between classes of objects. Inheritance has the advantage of reducing t
+he complexity of a program since modules with very similar interfaces can s
+hare lots of code. Due to this, inheritance has another view called polymor
+phism, where many sections of code are being controlled by some shared cont
+rol code. Inheritance is normally achieved by overriding one or more method
+s exposed by ancestor, or by creating new methods on top of those exposed b
+y an ancestor. Inheritance has a variety of uses. Each different use focuse
+s on different properties, for example the external behaviour of objects, i
+nternal structure of an object, inheritance hierarchy structure, or softwar
+e engineering properties of inheritance. Occasionally it is advantageous to
+ differentiate between these uses, as it is not necessarily noticeable from
+ context. 

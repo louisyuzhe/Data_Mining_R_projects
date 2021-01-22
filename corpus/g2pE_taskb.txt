@@ -1,0 +1,13 @@
+PageRank is a link analysis algorithm that is used by search engine such as
+ Google Internet that assigns a numerical weighting to every element of a h
+yperlinked set of documents, like the World Wide Web, with the hope of "mea
+suring" the relative importance held in the set. The algorithm may be appli
+ed to any numbr of entities with reciprocal quotations and references. The 
+weight taking a numerical value which assigns to any given element E is als
+o known as the PageRank of E and is denoted by PR(E).
+A trademark of Google has the name "PageRank"  and this process has been pa
+tented (U.S. Patent 6,285,999 ). Nevertheless, the patent is assigned to th
+e University of Stanford and not to Google. Google has exclusive license ri
+ghts on the patent from the University of Stanford and the university recei
+ved 1.8 million shares in Google in exchange for use of the patent; the in 
+the year 2005, shares were sold for $336 million.

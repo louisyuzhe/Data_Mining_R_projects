@@ -1,0 +1,20 @@
+The idea of inheritance in OOP refers to the formation of new classes with 
+the already existing classes. The concept of inheritance was basically form
+ulated for Simula in 1967.
+As a result, the newly created inherited or derived classes inherit the pro
+perties and behavior of the classes from which they are derived. These orig
+inal classes are either called base classes or sometimes referred to as anc
+estor classes.
+The idea of inheritance is to reuse the existing code with little or no mod
+ification at all.
+The basic support provided by inheritance is that it represents by categori
+zation in computer languages. The power mechanism number of information pro
+cessing that is crucial to human learning by the means of generalization an
+d cognitive economy is called categorization. Where generalization if the k
+nowledge of specific entities and is applied to a wider group provided that
+ belongs relation can be created. On the other hand cognitive economy is wh
+ere less information needs to be stored about each specific entity except f
+or some particularities.
+There are examples where we can have modules with similar interfaces. The a
+dvantage that inheritance provides is that it makes such modules share a lo
+t of code which consequently reduces the complexity of the program.

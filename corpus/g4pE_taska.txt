@@ -1,0 +1,19 @@
+Object oriented programming is a  style of programming that supports encaps
+ulation, inheritance, and polymorphism. Inheritance means derived  a new cl
+ass from the base class.  We can also say there are parents class and child
+ classes in inheritance.  Inheritance was firstly derived in 1967.
+The child class has all the features of parents class or we can say the bas
+e class more over it may also include some additional features.  Inheritanc
+e is used for modification and implementation new features in computer prog
+ramming language.It is possible that child class has all the attributes of 
+parents class but it is not possible that all the attributes of child class
+ must have in base class or parent class.
+I categorization in computer language also inheritance is a useful tool.cat
+egorization define as a powerful  feature.it  has been also used in general
+isation and in human learning. In some areas less information need to be st
+ored.
+Generlisation also some time known as inheritance. The main reason behind t
+his is a hierarchi structure of objects and classes. We can understand  thi
+s mechanism by some examples: like fruit is aq main class and mangoes apple
+ ,orange is child classs of the main class.So obviously inherit all the pro
+perties of fruit class.

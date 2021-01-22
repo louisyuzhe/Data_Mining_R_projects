@@ -1,0 +1,23 @@
+Inheritance is a way to form new classes (instances of which are called obj
+ects) using classes that have already been defined. The new classes, known 
+as derived classes, take over (or inherit) attributes and behavior of the p
+re-existing classes, which are referred to as base classes (or ancestor cla
+sses). It is intended to help reuse existing code with little or no modific
+ation.
+
+An advantage of inheritance is that modules with sufficiently similar inter
+faces can share a lot of code, reducing the complexity of the program. Inhe
+ritance therefore has another view, a dual, called polymorphism, which desc
+ribes many pieces of code being controlled by shared control code.
+
+Inheritance is typically accomplished either by overriding (replacing) one 
+or more methods exposed by ancestor, or by adding new methods to those expo
+sed by an ancestor.
+
+In defining this inheritance hierarchy we have already defined certain rest
+rictions, not all of which are desirable. Singleness: using single inherita
+nce, a subclass can inherit from only one superclass. Visibility: whenever 
+client code has access to an object, it generally has access to all the obj
+ect's superclass data. Static: the inheritance hierarchy of an object is fi
+xed at instantiation when the object's type is selected and does not change
+ with time.

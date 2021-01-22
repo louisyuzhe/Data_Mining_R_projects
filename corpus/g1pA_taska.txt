@@ -1,0 +1,18 @@
+In object oriented programming, objects are grouped together into classes a
+ccording to their type, structure and the functions that can be performed o
+n them. Inheritance is a process in object oriented programming in which ob
+jects acquire (or inherit) the properties of objects of another class. It i
+s therefore used to create relationships between one object and another. Ea
+ch class groups together objects of a similar type, with similar properties
+. New classes can be formed by this process whose objects will have propert
+ies of both the classes from which this new class is formed. A superclass h
+as all of the properties of the subclasses below it. At the same time subcl
+asses are each distinctive from each other but related via the superclass. 
+Subclasses are said to ‘extend’ superclasses. Due to these relationships, o
+bject oriented programmes tend to be easier to modify since they do not nee
+d to be changed when a new object, with different properties is added. Inst
+ead, a new object is made to inherit properties of objects which already ex
+ist. Inheritance can be divided into two main processes: single inheritance
+ and multiple inheritance. Single inheritance means that the class can only
+ inherit from one other class, whereas multiple inheritance allows for inhe
+ritance from several classes.

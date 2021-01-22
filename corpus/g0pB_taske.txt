@@ -1,0 +1,28 @@
+Dynamic programming is a method for solving mathematical programming proble
+ms that exhibit the properties of overlapping subproblems and optimal subst
+ructure. This is a much quicker method than other more naive methods. The w
+ord "programming" in "dynamic programming" relates optimization, which is c
+ommonly referred to as mathematical programming. Richard Bellman originally
+ coined the term in the 1940s to describe a method for solving problems whe
+re one needs to find the best decisions one after another, and by 1953, he 
+refined his method to the current modern meaning.
+
+Optimal substructure means that by splitting the programming into optimal s
+olutions of subproblems, these can then be used to find the optimal solutio
+ns of the overall problem. One example is the computing of the shortest pat
+h to a goal from a vertex in a graph. First, compute the shortest path to t
+he goal from all adjacent vertices. Then, using this, the best overall path
+ can be found, thereby demonstrating the dynamic programming principle. Thi
+s general three-step process can be used to solve a problem:
+
+1. Break up the problem different smaller subproblems.
+
+2. Recursively use this three-step process to compute the optimal path in t
+he subproblem.
+
+3. Construct an optimal solution, using the computed optimal subproblems, f
+or the original problem.
+
+This process continues recursively, working over the subproblems by dividin
+g them into sub-subproblems and so forth, until a simple case is reached (o
+ne that is easily solvable). 

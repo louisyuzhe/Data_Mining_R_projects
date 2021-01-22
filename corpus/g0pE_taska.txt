@@ -1,0 +1,25 @@
+In object-oriented programming, inheritance is a way to form new classes (i
+nstances of which are called objects) using classes that have already been 
+defined. The inheritance concept was invented in 1967 for Simula. The new c
+lasses, known as derived classes, take over (or inherit) attribute and beha
+viour of the pre-existing classes, which are referred to as base classes (o
+r ancestor classes). It is intended to help reuse existing code with little
+ or no modification. Inheritance provides the support for representation by
+ categorization in computer languages. Categorization is a powerful mechani
+sm number of information processing, crucial to human learning by means of 
+generalization (what is known about specific entities is applied to a wider
+ group given a belongs relation can be established) and cognitive economy (
+less information needs to be stored about each specific entity, only its pa
+rticularities). Inheritance is also sometimes called generalization, becaus
+e the is-a relationships represent a hierarchy between classes of objects. 
+For instance, a "fruit" is a generalization of "apple", "orange", "mango" a
+nd many others. One can consider fruit to be an abstraction of apple, orang
+e, etc. Conversely, since apples are fruit (i.e., an apple is-a fruit), app
+les may naturally inherit all the properties common to all fruit, such as b
+eing a fleshy container for the seed of a plant. An advantage of inheritanc
+e is that modules with sufficiently similar interfaces can share a lot of c
+ode, reducing the complexity of the program. Inheritance therefore has anot
+her view, a dual, called polymorphism, which describes many pieces of code 
+being controlled by shared control code. Inheritance is typically accomplis
+hed either by overriding (replacing) one or more methods exposed by ancesto
+r, or by adding new methods to those exposed by an ancestor. 

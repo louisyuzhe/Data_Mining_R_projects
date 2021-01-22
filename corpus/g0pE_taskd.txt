@@ -1,0 +1,6 @@
+Bayes Theorem is an important theorem relating conditional probabilities, i
+t allows us to calculate PROB(A|B) from PROB(B|A). Bayes Theorem is importa
+nt because it can save us from gathering vast amounts of statistical eviden
+ce. The main theory is PROB(A|B) = PROB(B|A) * PROB(A) /PROB(B), it means U
+sing PROB(WIN|RAIN) from earlier, we can find the probability that it raine
+d on a day that Harry won a race.

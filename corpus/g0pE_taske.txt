@@ -1,0 +1,9 @@
+dynamic programming is a method of solving problems that exhibit the proper
+ties of overlapping subproblems and optimal substructure (described below).
+ The method takes much less time than naive methods. The word "programming"
+ in "dynamic programming" has no particular connection to computer programm
+ing at all, and instead comes from the term "mathematical programming", a s
+ynonym for optimization. Thus, the "program" is the optimal plan for action
+ that is produced. For instance, a finalized schedule of events at an exhib
+ition is sometimes called a program. Programming, in this sense, means find
+ing an acceptable plan of action, an algorithm. 

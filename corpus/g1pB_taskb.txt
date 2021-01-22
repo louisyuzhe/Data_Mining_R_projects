@@ -1,0 +1,14 @@
+A website’s page rank, is how ‘important’ it is on the web.  It is essentially a popularity meter.  Popularity or im
+portance is determined by the amount of links relating to the page there ar
+e, there are four different types.  Inbound, links from other pages to your
+s.  Outbound, links from your page to others.  Dangling, links to a page wh
+ich has no links to others.  Deep, links to a specific page, usually bypass
+ing the homepage.  The page rank algorithm takes the probability of a ‘random surfer’ becoming bored and requesting another ‘random page’ (otherwise known as the dampening factor) away from 1 and divides this num
+ber by the number of pages in the system, adding it to the dampening factor
+ multiplied by the page rank of a linked page divided by the number of outb
+ound links on that linked page.  Adding on this last section for every othe
+r page linked to from the original page.  Google uses this algorithm to ass
+ist intentional surfers in finding the best websites to suit their needs.  
+One of the problems with this popularity algorithm is that it is easily man
+ipulated and can give false values, hence the frequent recalculating of pag
+e ranks.

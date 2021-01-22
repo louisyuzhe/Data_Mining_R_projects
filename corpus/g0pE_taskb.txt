@@ -1,0 +1,9 @@
+PageRank is a link analysis algorithm used by the Google Internet search en
+gine that assigns a numerical weighting to each element of a hyperlinked se
+t of documents, such as the World Wide Web, with the purpose of "measuring"
+ its relative importance within the set. The algorithm may be applied to an
+y collection of entities with reciprocal quotations and references. PageRan
+k Uses in google toolbar: Measures popularity of a site ,Marketing value,Up
+dated periodically, in google directory: PageRank: sort links within catego
+ries;Volunteers evaluate, classify, annotate;Open Directory project using P
+ageRank. 

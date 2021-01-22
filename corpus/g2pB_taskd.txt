@@ -1,0 +1,27 @@
+
+In probability theory, Bayes' theorem also called Bayes' law after Rev Thom
+as Bayes compares the conditional and marginal probabilities of two random 
+events. It is often used to calculate posterior probabilities given observa
+tions. For example, a patient may be observed to have certain symptoms. Bay
+es' theorem can be used to calculate the likelihood that a proposed analysi
+s is accurate, given that observation. 
+As an official theorem, Bayes' theorem is valid in all universal interpreta
+tions of probability. However, it plays a fundamental role in the debate ar
+ound the foundations of statistics: frequentist and Bayesian interpretation
+s disagree about the ways in which probabilities should be assigned in appl
+ications.
+ Frequentists assign probabilities to random events according to their freq
+uencies of happening or to subsets of populations as proportions of the who
+le. Whilst Bayesians describe probabilities in terms of beliefs and degrees
+ of uncertainty. The articles on Bayesian probability and frequentist proba
+bility discuss these debates in greater detail.
+Bayes' theorem compares the conditional and marginal probabilities of event
+s A and B, where B has a non-vanishing probability.
+Each term in Bayes' theorem has a conventional name:
+P(A) is the previous probability  of A. It is "previous" in the sense that 
+it does not take into account any information about B.
+P(A|B) is the conditional probability of A, given B. It is also called the 
+subsequent probability because it is derived from or depends upon the speci
+fied value of B.
+P(B|A) is the conditional probability of B given A.
+P(B) is the previous.

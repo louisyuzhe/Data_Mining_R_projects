@@ -1,0 +1,18 @@
+Dynamic programming is an algorithmic technique used to solve certain optim
+ization problems where the object is to find the best solution from a numbe
+r of possibilities. It uses a so called ‘bottom-up’ approach, meaning that 
+the problem is solved as a set of sub-problems which in turn are made up of
+ sub-sub-problems.Sub-problems are then selected and used to solve the over
+all problem. These sub-problems are only solved once and the solutions are 
+saved so that they will not need to be recalculated again. Whilst calculate
+d individually, they may also overlap. When any sub-problem is met again, i
+t can be found and re-used to solve another problem. Since it searches all 
+possibilities, it is also very accurate. This method is far more efficient 
+than recalculating and therefore considerably reduces computation. It is wi
+dely used in computer science and can be applied for example, to compress d
+ata in high density bar codes.
+
+Dynamic programming is most effective and therefore most often used on obje
+cts that are ordered from left to right and whose order cannot be rearrange
+d. This means it works well on character chains for example. 
+

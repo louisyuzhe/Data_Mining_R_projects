@@ -1,0 +1,22 @@
+inheritance in object oriented programming is where a new class is formed u
+sing classes which have allready been defined. These classes have have some
+ of the behavior and attributes which where existent in the classes that it
+ inherited from. The peropos of inheritance in object oriented programming 
+is to minimize the reuse of existing code without modification.
+
+Inheritance allowes classes to be categorized, similer to the way humans ca
+tagorize. It also provides a way to generalize du to the "is a" relationshi
+p between classes. For example a "cow" is a generalization of "animal" simi
+larly so are "pigs" & cheaters". Defeining classes in this way, allows us t
+o define attributes and behaviours which are commen to all animals in one c
+lass, so cheaters would natuarly inheart properities commen to all animals.
+
+
+The advantage of inheritance is that classes which would otherwise have alo
+t of similar code , can instead shair the same code, thus reducing the comp
+lexity of the program. Inheritance, therefore, can also be refered to as po
+lymorphism which is where many pieces of code are controled by shared contr
+ol code.
+
+Inheritance can be accomplished by overriding methods in its ancestor, or b
+y adding new methods. 

@@ -1,0 +1,48 @@
+In mathematics and computer science, dynamic programming is a method of sol
+ving problems that exhibit the properties of overlapping subproblems and op
+timal substructure (described below). The method takes much less time than 
+naive methods.
+The term was originally used in the 1940s by Richard Bellman to describe th
+e process of solving problems where one needs to find the best decisions on
+e after another. By 1953, he had refined this to the modern meaning. The fi
+eld was founded as a systems analysis and engineering topic that is recogni
+zed by the IEEE. Bellman's contribution is remembered in the name of the Be
+llman equation, a central result of dynamic programming which restates an o
+ptimization problem in recursive form.
+The word "programming" in "dynamic programming" has no particular connectio
+n to computer programming at all, and instead comes from the term "mathemat
+ical programming", a synonym for optimization. Thus, the "program" is the o
+ptimal plan for action that is produced. For instance, a finalized schedule
+ of events at an exhibition is sometimes called a program. Programming, in 
+this sense, means finding an acceptable plan of action, an algorithm.
+Optimal substructure means that optimal solutions of subproblems can be use
+d to find the optimal solutions of the overall problem. For example, the sh
+ortest path to a goal from a vertex in a graph can be found by first comput
+ing the shortest path to the goal from all adjacent vertices, and then usin
+g this to pick the best overall path, as shown in Figure 1. In general, we 
+can solve a problem with optimal substructure using a three-step process:
+   1. Break the problem into smaller subproblems.
+   2. Solve these problems optimally using this three-step process recursiv
+ely.
+   3. Use these optimal solutions to construct an optimal solution for the 
+original problem.
+The subproblems are, themselves, solved by dividing them into sub-subproble
+ms, and so on, until we reach some simple case that is solvable in constant
+ time.
+Figure 2. The subproblem graph for the Fibonacci sequence. That it is not a
+ tree but a DAG indicates overlapping subproblems.
+To say that a problem has overlapping subproblems is to say that the same s
+ubproblems are used to solve many different larger problems. For example, i
+n the Fibonacci sequence, F3 = F1 + F2 and F4 = F2 + F3 - computing each nu
+mber involves computing F2. Because both F3 and F4 are needed to compute F5
+, a naive approach to computing F5 may end up computing F2 twice or more. T
+his applies whenever overlapping subproblems are present: a naive approach 
+may waste time recomputing optimal solutions to subproblems it has already 
+solved.
+In order to avoid this, we instead save the solutions to problems we have a
+lready solved. Then, if we need to solve the same problem later, we can ret
+rieve and reuse our already-computed solution. This approach is called memo
+ization (not memorization, although this term also fits). If we are sure we
+ won't need a particular solution anymore, we can throw it away to save spa
+ce. In some cases, we can even compute the solutions to subproblems we know
+ that we'll need in advance.

@@ -1,0 +1,16 @@
+In computer science; dynamic programming is a way of solving problems consi
+st of overlapping subproblems and optimal substructure. The method is more 
+effiecent than naive methods.
+
+The term was first coined in the 1940s by Richard Bellman to describe the p
+rocess of solving problems where you need to find the best decisions consec
+utavly. In 1953 he had refined this to the modern meaning. The field was fo
+unded as a systems analysis and engineering topic that is recognized by the
+ IEEE. Bellman equation is a central result of dynamic programming which re
+states an optimization problem in recursive form.
+
+dynamic programming has little connection to computer programming at all, a
+nd instead comes from the term mathematical programming, a synonym for opti
+mization. Thus, the program is the best plan for action that is produced. F
+or instance, a events schedule at an exhibition is sometimes called a progr
+am. Programming means finding a plan of action. 
