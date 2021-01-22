@@ -1,5 +1,5 @@
 ---
-title: "CS 422 Section 01"
+title: "Statistical Learning"
 output: html_notebook
 author: Yuzhe Lim
 ---
@@ -8,7 +8,6 @@ author: Yuzhe Lim
 ### Part 2.1-A
 ```{r}
 library(dplyr)
-setwd("C:/Users/Yu Zhe/Desktop/Illinois Tech/Spring 2019/CS 422/HW1")
 college.df <- read.csv("College.csv")
 #Is the seperating method important? "sep"
 college.df[1:6,]

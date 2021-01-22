@@ -1,5 +1,5 @@
 ---
-title: "CS 422 Section 01"
+title: "Association Rule Mining"
 output: html_notebook
 author: Yuzhe Lim
 ---
@@ -10,7 +10,7 @@ author: Yuzhe Lim
 library(rpart)
 library(rpart.plot)
 library(caret)
-setwd("C:/Users/Yu Zhe/OneDrive/IIT/Illinois Tech/Spring 2019/CS 422/HW2")
+library(arulesViz)
 
 ```
 
@@ -23,7 +23,7 @@ train <- read.csv("adult-train.csv")
 test <- read.csv("adult-test.csv")
 
 dim(train)[1]
-sum(train.df$occupation == "?")
+sum(train$occupation == "?")
 
 #Unimplemented methods
 #indx1 <- which(test.df$occupation == "?")
@@ -97,11 +97,11 @@ cat(sprintf("Specificity: %.3f", specificity))
 ```{r}
 # ROC curve
 pred.rocr <- predict(dtree, newdata=test, type="prob")[,2]
-f.pred <- prediction(pred.rocr, test$income)
-f.perf <- performance(f.pred, "tpr", "fpr")
+f.pred <- ROCR::prediction(pred.rocr, test$income)
+f.perf <- ROCR::performance(f.pred, "tpr", "fpr")
 
 #AUC
-auc <- performance(f.pred, measure = "auc")
+auc <- ROCR::performance(f.pred, measure = "auc")
 cat(paste("The area under curve (AUC) for this model is", round(auc@y.values[[1]], 3)))
 
 #ROC Plot
